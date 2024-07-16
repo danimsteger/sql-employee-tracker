@@ -1,19 +1,7 @@
 const inquirer = require("inquirer");
 const colors = require("colors");
 const consoleTable = require("console.table");
-
-const { Pool } = require("pg");
-const pool = new Pool(
-  {
-    user: "",
-    password: "",
-    host: "localhost",
-    database: "company",
-  },
-  console.log("Connected to company database.")
-);
-
-pool.connect();
+const poolQuery = require("./assets/queries");
 
 function promptUser() {
   inquirer
@@ -37,27 +25,31 @@ function promptUser() {
       const { toDo } = answer;
       console.log("Selected Option:", toDo);
 
-      let query = "";
-
       if (toDo === colors.magenta("View All Departments")) {
-        query =
+        const query =
           'SELECT departments.dept_id as "ID", departments.dept_name as "NAME" FROM departments;';
+        poolQuery(query, promptUser);
       } else if (toDo === colors.red("View All Roles")) {
-        query =
+        const query =
           'SELECT roles.role_id AS "ID", roles.role_title AS "TITLE", departments.dept_name AS "DEPARTMENT", roles.role_salary AS "SALARY" FROM roles JOIN departments ON roles.dept_id = departments.dept_id;';
+        poolQuery(query, promptUser);
       } else if (toDo === colors.green("View All Employees")) {
-        query =
+        const query =
           'SELECT employees.employee_id AS "ID", employees.first_name AS "FIRST NAME", employees.last_name AS "LAST NAME", roles.role_title AS "TITLE", departments.dept_name AS "DEPARTMENT", roles.role_salary AS "SALARY", employees.manager_id AS "MANAGER" FROM employees JOIN roles ON employees.role_id = roles.role_id JOIN departments ON roles.dept_id = departments.dept_id;';
-      }
-
-      pool.query(query, (err, res) => {
-        if (err) {
-          console.error("Error executing query:", err);
-        } else {
-          console.table(res.rows);
-        }
+        poolQuery(query, promptUser);
+      } else if (toDo === colors.magenta("Add A Department")) {
+        console.log("I'm adding a department" + toDo);
         promptUser();
-      });
+      } else if (toDo === colors.red("Add a Role")) {
+        console.log("I'm adding a role" + toDo);
+        promptUser();
+      } else if (toDo === colors.green("Add an Employee")) {
+        console.log("I'm adding an employee" + toDo);
+        promptUser();
+      } else {
+        console.log("I'm doing something else");
+        promptUser();
+      }
     });
 }
 
@@ -79,3 +71,27 @@ promptUser();
 // } else {
 //   console.log("this isn't working");
 // }
+
+//THIS PART WORKS!!!
+// let query = "";
+
+// if (toDo === colors.magenta("View All Departments")) {
+//   query =
+//     'SELECT departments.dept_id as "ID", departments.dept_name as "NAME" FROM departments;';
+// } else if (toDo === colors.red("View All Roles")) {
+//   query =
+//     'SELECT roles.role_id AS "ID", roles.role_title AS "TITLE", departments.dept_name AS "DEPARTMENT", roles.role_salary AS "SALARY" FROM roles JOIN departments ON roles.dept_id = departments.dept_id;';
+// } else if (toDo === colors.green("View All Employees")) {
+//   query =
+//     'SELECT employees.employee_id AS "ID", employees.first_name AS "FIRST NAME", employees.last_name AS "LAST NAME", roles.role_title AS "TITLE", departments.dept_name AS "DEPARTMENT", roles.role_salary AS "SALARY", employees.manager_id AS "MANAGER" FROM employees JOIN roles ON employees.role_id = roles.role_id JOIN departments ON roles.dept_id = departments.dept_id;';
+// }
+
+// pool.query(query, (err, res) => {
+//   if (err) {
+//     console.error("Error executing query:", err);
+//   } else {
+//     console.table(res.rows);
+//   }
+//   promptUser();
+// });
+// });
