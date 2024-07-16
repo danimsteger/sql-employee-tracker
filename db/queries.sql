@@ -1,4 +1,5 @@
 -- Departments Table
+
 SELECT departments.dept_id as "ID", departments.dept_name as "NAME" FROM departments;
 
 
