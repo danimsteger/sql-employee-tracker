@@ -1,7 +1,8 @@
 const inquirer = require("inquirer");
 const colors = require("colors");
 const consoleTable = require("console.table");
-const poolQuery = require("./assets/queries");
+const { poolQueryDisplay } = require("./assets/queries");
+const { addDept, addRole } = require("./assets/prompts");
 
 function promptUser() {
   inquirer
@@ -28,21 +29,19 @@ function promptUser() {
       if (toDo === colors.magenta("View All Departments")) {
         const query =
           'SELECT departments.dept_id as "ID", departments.dept_name as "NAME" FROM departments;';
-        poolQuery(query, promptUser);
+        poolQueryDisplay(query, promptUser);
       } else if (toDo === colors.red("View All Roles")) {
         const query =
           'SELECT roles.role_id AS "ID", roles.role_title AS "TITLE", departments.dept_name AS "DEPARTMENT", roles.role_salary AS "SALARY" FROM roles JOIN departments ON roles.dept_id = departments.dept_id;';
-        poolQuery(query, promptUser);
+        poolQueryDisplay(query, promptUser);
       } else if (toDo === colors.green("View All Employees")) {
         const query =
           'SELECT employees.employee_id AS "ID", employees.first_name AS "FIRST NAME", employees.last_name AS "LAST NAME", roles.role_title AS "TITLE", departments.dept_name AS "DEPARTMENT", roles.role_salary AS "SALARY", employees.manager_id AS "MANAGER" FROM employees JOIN roles ON employees.role_id = roles.role_id JOIN departments ON roles.dept_id = departments.dept_id;';
-        poolQuery(query, promptUser);
+        poolQueryDisplay(query, promptUser);
       } else if (toDo === colors.magenta("Add A Department")) {
-        console.log("I'm adding a department" + toDo);
-        promptUser();
+        addDept(promptUser);
       } else if (toDo === colors.red("Add a Role")) {
-        console.log("I'm adding a role" + toDo);
-        promptUser();
+        addRole(promptUser);
       } else if (toDo === colors.green("Add an Employee")) {
         console.log("I'm adding an employee" + toDo);
         promptUser();
