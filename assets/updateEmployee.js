@@ -19,6 +19,9 @@ async function getEmployees() {
 async function updateEmployee(callback) {
   try {
     const employees = await getEmployees();
+    const employeeNames = employees.map(
+      (employee) => `${employee.first_name} ${employee.last_name}`
+    );
     const roles = await getRoles();
 
     const roleNames = roles.map((role) => role.role_title);
@@ -32,11 +35,8 @@ async function updateEmployee(callback) {
       {
         type: "list",
         message: "Which employee's role did you want to update?",
-        choices: employees.map((employee) => ({
-          name: `${employee.first_name} ${employee.last_name}`,
-          value: employee.employee_id,
-        })),
-        name: "employee_id",
+        choices: employeeNames,
+        name: "employee_name",
       },
       {
         type: "list",
@@ -46,29 +46,23 @@ async function updateEmployee(callback) {
       },
     ]);
 
-    const { role_title } = answer;
-    const selectedEmployeeId = answer.employee_id;
+    const { role_title, employee_name } = answer;
+    const selectedEmployee = employees.find(
+      (employee) =>
+        `${employee.first_name} ${employee.last_name}` === employee_name
+    );
+    const selectedEmployeeId = selectedEmployee.employee_id;
     const role_id = roleIDs[role_title];
 
     const sql = `UPDATE employees SET role_id = $1 WHERE employee_id = $2;`;
     const params = [role_id, selectedEmployeeId];
 
-    console.log(
-      "this is my employee ID: " +
-        selectedEmployeeId +
-        "and i want to change their role to: " +
-        role_title +
-        role_id
-    );
-
     await modifyTable(sql, params, callback);
 
     console.log(
-      "Updated employee with id: " +
-        selectedEmployeeId +
-        " to role with id: " +
-        role_id +
-        " successfully"
+      colors.yellow.bold(employee_name + "'s"),
+      colors.green(" role was updated to "),
+      colors.yellow.bold(role_title)
     );
   } catch (error) {
     console.error("Error updating employee", error);

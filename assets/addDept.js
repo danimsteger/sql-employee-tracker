@@ -17,11 +17,12 @@ function addDept(callback) {
       const sql = `INSERT INTO departments (dept_name) VALUES ($1)`;
       const params = [dept_name];
 
-      console.log(dept_name);
-
       modifyTable(sql, params, callback);
 
-      console.log("Added " + dept_name + " to the database");
+      console.log(
+        colors.yellow.bold(dept_name),
+        colors.magenta(" was added to departments.")
+      );
     });
 }
 

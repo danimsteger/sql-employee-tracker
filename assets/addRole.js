@@ -53,16 +53,12 @@ async function addRole(callback) {
     const sql = `INSERT INTO roles (role_title, role_salary, dept_id) VALUES ($1, $2, $3)`;
     const params = [role_title, role_salary, dept_id];
 
-    console.log(
-      "This is my department name:" +
-        dept_name +
-        " And this is my department id " +
-        dept_id
-    );
-
     await modifyTable(sql, params, callback);
 
-    console.log("Added " + role_title + " to the database");
+    console.log(
+      colors.yellow.bold(role_title),
+      colors.red(" was added to roles.")
+    );
   } catch (error) {
     console.error("Error adding role", error);
   }

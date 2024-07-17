@@ -1,3 +1,4 @@
+const colors = require("colors");
 const pool = require("./db");
 
 // Display Query
@@ -18,7 +19,7 @@ function modifyTable(sql, params, callback) {
     if (err) {
       console.error("Error executing add:", err);
     } else {
-      console.log("Successfully added department!!!!!");
+      console.log(colors.blue("~ The table was successfully updated ~"));
     }
     callback();
   });

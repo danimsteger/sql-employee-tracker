@@ -50,17 +50,12 @@ async function addEmployee(callback) {
     const sql = `INSERT INTO employees (first_name, last_name, role_id) VALUES ($1, $2, $3)`;
     const params = [first_name, last_name, role_id];
 
-    console.log(
-      "This is my employee name:" +
-        first_name +
-        last_name +
-        " And this is my role id " +
-        role_id
-    );
-
     await modifyTable(sql, params, callback);
 
-    console.log("Added " + first_name + last_name + " to the database");
+    console.log(
+      colors.yellow.bold(first_name, last_name),
+      colors.green(" was added to employees")
+    );
   } catch (error) {
     console.error("Error adding employee", error);
   }
