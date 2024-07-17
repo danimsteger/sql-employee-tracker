@@ -1,11 +1,15 @@
+// Import packages
 const inquirer = require("inquirer");
 const colors = require("colors");
-const { getRoles } = require("./addEmployee");
 
+// Import functions to gather roles and modify table
+const { getRoles } = require("./addEmployee");
 const { modifyTable } = require("./queries");
 
+// Import database connection
 const pool = require("./db");
 
+// Get current list of employees
 async function getEmployees() {
   try {
     const result = await pool.query(`SELECT * FROM employees`);
@@ -19,13 +23,18 @@ async function getEmployees() {
 async function updateEmployee(callback) {
   try {
     const employees = await getEmployees();
+
+    // Creates array of all employees listed with their first and last names
     const employeeNames = employees.map(
       (employee) => `${employee.first_name} ${employee.last_name}`
     );
+
     const roles = await getRoles();
 
+    // Creates array of just role titles
     const roleNames = roles.map((role) => role.role_title);
 
+    // Creates an object of key value pairs of 'role_title': role_id
     const roleIDs = roles.reduce((acc, role) => {
       acc[role.role_title] = role.role_id;
       return acc;
@@ -46,17 +55,26 @@ async function updateEmployee(callback) {
       },
     ]);
 
+    // Gathers results from prompts
     const { role_title, employee_name } = answer;
+
+    // Finds the selected employee in the employees array
     const selectedEmployee = employees.find(
       (employee) =>
         `${employee.first_name} ${employee.last_name}` === employee_name
     );
+
+    // Gets the id of the selected employee
     const selectedEmployeeId = selectedEmployee.employee_id;
+
+    // Gets the id of the selected role
     const role_id = roleIDs[role_title];
 
+    // SQL syntax to update a row in the employees table
     const sql = `UPDATE employees SET role_id = $1 WHERE employee_id = $2;`;
     const params = [role_id, selectedEmployeeId];
 
+    // Query with SQL syntax
     await modifyTable(sql, params, callback);
 
     console.log(
