@@ -15,3 +15,6 @@ JOIN roles
 ON employees.role_id = roles.role_id
 JOIN departments
 ON roles.dept_id = departments.dept_id;
+
+
+-- UPDATE employees SET first_name = 'JANE', last_name = 'SMITH' WHERE employee_id = 8;
