@@ -1,17 +1,7 @@
-const { Pool } = require("pg");
-const pool = new Pool(
-  {
-    user: "",
-    password: "",
-    host: "localhost",
-    database: "company",
-  },
-  console.log("Connected to company database.")
-);
+const pool = require("./db");
 
-pool.connect();
-
-function poolQueryDisplay(query, callback) {
+// Display Query
+function displayTable(query, callback) {
   pool.query(query, (err, res) => {
     if (err) {
       console.error("Error executing query:", err);
@@ -22,7 +12,8 @@ function poolQueryDisplay(query, callback) {
   });
 }
 
-function poolQueryAdd(sql, params, callback) {
+// Modify an existing table by adding or updating
+function modifyTable(sql, params, callback) {
   pool.query(sql, params, (err, res) => {
     if (err) {
       console.error("Error executing add:", err);
@@ -33,4 +24,4 @@ function poolQueryAdd(sql, params, callback) {
   });
 }
 
-module.exports = { poolQueryDisplay, poolQueryAdd };
+module.exports = { displayTable, modifyTable };
