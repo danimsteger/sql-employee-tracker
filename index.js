@@ -2,7 +2,7 @@ const inquirer = require("inquirer");
 const colors = require("colors");
 const consoleTable = require("console.table");
 const { poolQueryDisplay } = require("./assets/queries");
-const { addDept, addRole } = require("./assets/prompts");
+const { addDept, addRole, addEmployee } = require("./assets/prompts");
 
 function promptUser() {
   inquirer
@@ -43,8 +43,7 @@ function promptUser() {
       } else if (toDo === colors.red("Add a Role")) {
         addRole(promptUser);
       } else if (toDo === colors.green("Add an Employee")) {
-        console.log("I'm adding an employee" + toDo);
-        promptUser();
+        addEmployee(promptUser);
       } else {
         console.log("I'm doing something else");
         promptUser();
