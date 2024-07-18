@@ -48,8 +48,7 @@ function promptUser() {
 
       // View employees
       else if (toDo === colors.green("View All Employees")) {
-        const query =
-          'SELECT employees.employee_id AS "ID", employees.first_name AS "FIRST NAME", employees.last_name AS "LAST NAME", roles.role_title AS "TITLE", departments.dept_name AS "DEPARTMENT", roles.role_salary AS "SALARY", employees.manager_id AS "MANAGER" FROM employees JOIN roles ON employees.role_id = roles.role_id JOIN departments ON roles.dept_id = departments.dept_id;';
+        const query = `SELECT e.employee_id AS "ID", e.first_name AS "FIRST NAME", e.last_name AS "LAST NAME", roles.role_title AS "TITLE", departments.dept_name AS "DEPARTMENT", roles.role_salary AS "SALARY", CONCAT(m.first_name, ' ', m.last_name) AS "MANAGER" FROM employees e JOIN roles ON e.role_id = roles.role_id JOIN departments ON roles.dept_id = departments.dept_id LEFT JOIN employees m ON e.manager_id = m.employee_id ORDER BY e.employee_id;`;
         displayTable(query, promptUser);
       }
 

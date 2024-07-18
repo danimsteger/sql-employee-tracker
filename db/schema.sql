@@ -22,6 +22,9 @@ CREATE TABLE roles (
     REFERENCES departments(dept_id)
 );
 
+-- Employee Table
+-- em
+
 CREATE TABLE employees (
     employee_id SERIAL PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
@@ -29,7 +32,8 @@ CREATE TABLE employees (
     role_id INTEGER NOT NULL,
     manager_id INTEGER,
     FOREIGN KEY (role_id)
-    REFERENCES roles(role_id)
+    REFERENCES roles(role_id),
+    FOREIGN KEY (manager_id) 
+    REFERENCES employees(employee_id)
 );
 
---maybe do something with manager id????
