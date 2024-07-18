@@ -11,7 +11,7 @@ const pool = require("./db");
 // Get current list of roles
 async function getRoles() {
   try {
-    const result = await pool.query(`SELECT * FROM roles`);
+    const result = await pool.query(`SELECT * FROM roles ORDER BY roles_id`);
     const rows = result.rows;
     return rows;
   } catch (err) {

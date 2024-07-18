@@ -11,7 +11,9 @@ const pool = require("./db");
 // Get current list of departments
 async function getDepts() {
   try {
-    const result = await pool.query(`SELECT * FROM departments`);
+    const result = await pool.query(
+      `SELECT * FROM departments ORDER BY dept_id`
+    );
     const rows = result.rows;
     return rows;
   } catch (err) {

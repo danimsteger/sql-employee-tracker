@@ -35,14 +35,14 @@ function promptUser() {
       // View departments
       if (toDo === colors.magenta("View All Departments")) {
         const query =
-          'SELECT departments.dept_id as "ID", departments.dept_name as "NAME" FROM departments;';
+          'SELECT departments.dept_id as "ID", departments.dept_name as "NAME" FROM departments ORDER BY dept_id;';
         displayTable(query, promptUser);
       }
 
       // View roles
       else if (toDo === colors.red("View All Roles")) {
         const query =
-          'SELECT roles.role_id AS "ID", roles.role_title AS "TITLE", departments.dept_name AS "DEPARTMENT", roles.role_salary AS "SALARY" FROM roles JOIN departments ON roles.dept_id = departments.dept_id;';
+          'SELECT roles.role_id AS "ID", roles.role_title AS "TITLE", departments.dept_name AS "DEPARTMENT", roles.role_salary AS "SALARY" FROM roles JOIN departments ON roles.dept_id = departments.dept_id ORDER BY role_id;';
         displayTable(query, promptUser);
       }
 

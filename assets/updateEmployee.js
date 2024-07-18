@@ -12,7 +12,9 @@ const pool = require("./db");
 // Get current list of employees
 async function getEmployees() {
   try {
-    const result = await pool.query(`SELECT * FROM employees`);
+    const result = await pool.query(
+      `SELECT * FROM employees ORDER BY employee_id`
+    );
     const rows = result.rows;
     return rows;
   } catch (err) {
