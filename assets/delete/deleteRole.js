@@ -8,6 +8,8 @@ const { modifyTable, getRoles } = require("../queries");
 async function deleteRole(callback) {
   try {
     const roles = await getRoles();
+
+    // Creates an array of just role titles
     const roleNames = roles.map((role) => role.role_title);
 
     // Creates an object of key value pairs of 'role_title': role_id
@@ -26,18 +28,21 @@ async function deleteRole(callback) {
       },
     ]);
 
-    const { role_title } = answer;
-    // Gets the id of the selected role
+    // Gathers result from prompt
 
+    const { role_title } = answer;
+
+    // Gets the id of the selected role
     const selectedRoleId = roleIDs[role_title];
 
+    // SQL syntax to delete a row from the roles table
     const sql = `DELETE FROM roles WHERE role_id = $1`;
     const params = [selectedRoleId];
 
     await modifyTable(sql, params, callback);
     console.log(
       colors.yellow.bold(role_title),
-      colors.red(" was deleted from roles.")
+      colors.green(" was deleted from roles.")
     );
   } catch (error) {
     console.error("Error deleting departmenta:", error);

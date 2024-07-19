@@ -30,16 +30,20 @@ async function deleteDept(callback) {
       },
     ]);
 
+    // Gathers result from prompt
     const { dept_name } = answer;
+
+    // Gets id of selected department
     const dept_id = departmentIDs[dept_name];
 
+    // SQL syntax to delete a row in departments table
     const sql = `DELETE FROM departments WHERE dept_id = $1`;
     const params = [dept_id];
 
     await modifyTable(sql, params, callback);
     console.log(
       colors.yellow.bold(dept_name),
-      colors.magenta(" was deleted from departments")
+      colors.green(" was deleted from departments")
     );
   } catch (error) {
     console.error("Error deleting departmenta:", error);

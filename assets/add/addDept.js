@@ -26,7 +26,7 @@ function addDept(callback) {
 
       console.log(
         colors.yellow.bold(dept_name),
-        colors.magenta(" was added to departments.")
+        colors.green(" was added to departments.")
       );
     });
 }

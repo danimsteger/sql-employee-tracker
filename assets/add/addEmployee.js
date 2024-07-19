@@ -2,7 +2,7 @@
 const inquirer = require("inquirer");
 const colors = require("colors");
 
-// Import query function to modify a table
+// Import query function to modify a table, get list of roles, and employees
 const { modifyTable, getRoles, getEmployees } = require("../queries");
 
 async function addEmployee(callback) {
@@ -52,13 +52,17 @@ async function addEmployee(callback) {
 
     // Gathers results from prompts
     const { first_name, last_name, role_title, manager_name } = answer;
+
+    // Gets the id of the selected role
     const role_id = roleIDs[role_title];
 
+    // Gets the employee name of the selected manager
     const selectedManager = employees.find(
       (employee) =>
         `${employee.first_name} ${employee.last_name}` === manager_name
     );
 
+    // Gets the employee id of the selected manager
     const selectedManagerId = selectedManager.employee_id;
 
     // SQL syntax to add a row to employees table

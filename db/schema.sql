@@ -1,18 +1,24 @@
+-- Drop database to reset if necessary
 DROP DATABASE IF EXISTS company;
 
+-- Create company database
 CREATE DATABASE company;
 
+-- Navigate to company database
 \c company;
 
+-- Drop tables if they exist to reset them
 DROP TABLE IF EXISTS departments;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS employees;
 
+-- Create departments table 
 CREATE TABLE departments (
     dept_id SERIAL PRIMARY KEY,
     dept_name VARCHAR(30) UNIQUE NOT NULL
 );
 
+-- Create roles table
 CREATE TABLE roles (
     role_id SERIAL PRIMARY KEY,
     role_title VARCHAR(30) UNIQUE NOT NULL,
@@ -23,9 +29,7 @@ CREATE TABLE roles (
     ON DELETE CASCADE\
 );
 
--- Employee Table
--- em
-
+-- Create employees table
 CREATE TABLE employees (
     employee_id SERIAL PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,

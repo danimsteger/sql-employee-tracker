@@ -1,3 +1,5 @@
+-- Several SQL Queries used in assets folder but tested in SQL first
+
 -- Departments Table
 
 SELECT departments.dept_id as "ID", departments.dept_name as "NAME" FROM departments;

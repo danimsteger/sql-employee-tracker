@@ -2,7 +2,7 @@
 const inquirer = require("inquirer");
 const colors = require("colors");
 
-// Import query function to modify a table
+// Import query function to modify a table and get list of departments
 const { modifyTable, getDepts } = require("../queries");
 
 async function addRole(callback) {
@@ -41,6 +41,8 @@ async function addRole(callback) {
 
     // Gathers results from prompts
     const { role_title, role_salary, dept_name } = answer;
+
+    // Gets the id of the selected department
     const dept_id = departmentIDs[dept_name];
 
     // SQL syntax to add a row to the roles table
@@ -52,7 +54,7 @@ async function addRole(callback) {
 
     console.log(
       colors.yellow.bold(role_title),
-      colors.red(" was added to roles.")
+      colors.green(" was added to roles.")
     );
   } catch (error) {
     console.error("Error adding role", error);

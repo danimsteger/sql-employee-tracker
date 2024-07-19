@@ -6,12 +6,20 @@
 
 This project involved creating a command-line application connected with a SQL database to input, store, modify, and view employee data. It was created using JavaScript, SQL, Express, Node, Inquirer, colors, console.table and PostgreSQL.
 
+---
+
+---
+
 ## Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Credits](#credits)
 - [License](#license)
+
+---
+
+---
 
 ## Installation
 
@@ -107,6 +115,10 @@ In addition to these delete features, users also have additional information tha
 Finally, users can view important information about the company by department. By selecting 'View Department Salary Information' users are presented with a table that lists the departments, the number of employees in each department, the total sum of all the salaries of that department and the average salary of that department.
 
 ![Sample view of department info](./assets/images/deptsalaryinfo.png)
+
+---
+
+---
 
 ## Credits
 

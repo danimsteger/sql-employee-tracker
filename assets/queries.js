@@ -1,7 +1,8 @@
+// Import packages
 const colors = require("colors");
 const pool = require("./db");
 
-// Display Query
+// Display Table based on a query
 function displayTable(query, callback) {
   pool.query(query, (err, res) => {
     if (err) {
@@ -13,7 +14,7 @@ function displayTable(query, callback) {
   });
 }
 
-// Modify an existing table by adding or updating
+// Modify an existing table by adding a row, or updating or deleting an existing row
 function modifyTable(sql, params, callback) {
   pool.query(sql, params, (err, res) => {
     if (err) {

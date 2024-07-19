@@ -9,6 +9,7 @@ async function deleteEmployee(callback) {
   try {
     const employees = await getEmployees();
 
+    // Creates an array of employee names
     const employeeNames = employees.map(
       (employee) => `${employee.first_name} ${employee.last_name}`
     );
@@ -22,15 +23,19 @@ async function deleteEmployee(callback) {
       },
     ]);
 
+    // Gathers result from prompt
     const { employee_name } = answer;
 
+    // Gets the name of the selected employee
     const selectedEmployee = employees.find(
       (employee) =>
         `${employee.first_name} ${employee.last_name}` === employee_name
     );
 
+    // Gets the id of the selected employee
     const selectedEmployeeId = selectedEmployee.employee_id;
 
+    // SQL syntax to delete a row from employees table
     const sql = `DELETE FROM employees WHERE employee_id = $1`;
     const params = [selectedEmployeeId];
 

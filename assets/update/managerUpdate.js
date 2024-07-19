@@ -41,12 +41,15 @@ async function managerUpdate(callback) {
     // Gets the id of the selected employee
     const selectedEmployeeId = selectedEmployee.employee_id;
 
+    // Finds the selected manager in the employees array
     const selectedManager = employees.find(
       (employee) =>
         `${employee.first_name} ${employee.last_name}` === manager_name
     );
 
+    // Gets the employee id of the selected manager
     const selectedManagerId = selectedManager.employee_id;
+
     // SQL syntax to update a row in the employees table
     const sql = `UPDATE employees SET manager_id = $1 WHERE employee_id = $2;`;
     const params = [selectedManagerId, selectedEmployeeId];
