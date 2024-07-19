@@ -93,3 +93,10 @@ ON e.role_id = roles.role_id
 JOIN departments
 ON roles.dept_id = departments.dept_id
 ORDER BY departments.dept_name, e.first_name;
+
+
+SELECT departments.dept_name AS "DEPARTMENT", COUNT(employees.employee_id) AS "NUMBER OF EMPLOYEES", SUM(role_salary) AS "TOTAL SALARY", AVG(roles.role_salary) AS "AVERAGE SALARY"
+FROM roles
+JOIN departments ON roles.dept_id = departments.dept_id
+JOIN employees ON roles.role_id = employees.role_id
+GROUP BY departments.dept_name;

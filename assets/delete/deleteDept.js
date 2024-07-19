@@ -3,9 +3,9 @@ const inquirer = require("inquirer");
 const colors = require("colors");
 
 // Import query function to modify a table
-const { modifyTable, getDepts } = require("./queries");
+const { modifyTable, getDepts } = require("../queries");
 
-async function deleteItem(callback) {
+async function deleteDept(callback) {
   try {
     const departments = await getDepts();
 
@@ -23,7 +23,8 @@ async function deleteItem(callback) {
     const answer = await inquirer.prompt([
       {
         type: "list",
-        message: "Which department would you like to delete?",
+        message:
+          "Which department would you like to delete? BE CAREFUL! THIS WILL DELETE ALL ROLES & EMPLOYEES IN THIS DEPARTMENT.",
         choices: departmentNames,
         name: "dept_name",
       },
@@ -38,11 +39,11 @@ async function deleteItem(callback) {
     await modifyTable(sql, params, callback);
     console.log(
       colors.yellow.bold(dept_name),
-      colors.magenta(" was deleted from departmetns")
+      colors.magenta(" was deleted from departments")
     );
   } catch (error) {
     console.error("Error deleting departmenta:", error);
   }
 }
 
-module.exports = deleteItem;
+module.exports = deleteDept;

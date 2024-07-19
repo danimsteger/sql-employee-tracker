@@ -3,9 +3,9 @@ const inquirer = require("inquirer");
 const colors = require("colors");
 
 // Import functions to gather roles and modify table
-const { modifyTable, getRoles, getEmployees } = require("./queries");
+const { modifyTable, getEmployees } = require("../queries");
 
-async function roleUpdate(callback) {
+async function managerUpdate(callback) {
   try {
     const employees = await getEmployees();
 
@@ -14,34 +14,23 @@ async function roleUpdate(callback) {
       (employee) => `${employee.first_name} ${employee.last_name}`
     );
 
-    const roles = await getRoles();
-
-    // Creates array of just role titles
-    const roleNames = roles.map((role) => role.role_title);
-
-    // Creates an object of key value pairs of 'role_title': role_id
-    const roleIDs = roles.reduce((acc, role) => {
-      acc[role.role_title] = role.role_id;
-      return acc;
-    }, {});
-
     const answer = await inquirer.prompt([
       {
         type: "list",
-        message: "Which employee's role did you want to update?",
+        message: "Which employee's manager did you want to update?",
         choices: employeeNames,
         name: "employee_name",
       },
       {
         type: "list",
-        message: "What role would you like to assign to the selected employee?",
-        choices: roleNames,
-        name: "role_title",
+        message: "What is the employee's new manager?",
+        choices: employeeNames,
+        name: "manager_name",
       },
     ]);
 
     // Gathers results from prompts
-    const { role_title, employee_name } = answer;
+    const { employee_name, manager_name } = answer;
 
     // Finds the selected employee in the employees array
     const selectedEmployee = employees.find(
@@ -52,24 +41,27 @@ async function roleUpdate(callback) {
     // Gets the id of the selected employee
     const selectedEmployeeId = selectedEmployee.employee_id;
 
-    // Gets the id of the selected role
-    const role_id = roleIDs[role_title];
+    const selectedManager = employees.find(
+      (employee) =>
+        `${employee.first_name} ${employee.last_name}` === manager_name
+    );
 
+    const selectedManagerId = selectedManager.employee_id;
     // SQL syntax to update a row in the employees table
-    const sql = `UPDATE employees SET role_id = $1 WHERE employee_id = $2;`;
-    const params = [role_id, selectedEmployeeId];
+    const sql = `UPDATE employees SET manager_id = $1 WHERE employee_id = $2;`;
+    const params = [selectedManagerId, selectedEmployeeId];
 
     // Query with SQL syntax
     await modifyTable(sql, params, callback);
 
     console.log(
       colors.yellow.bold(employee_name + "'s"),
-      colors.green(" role was updated to "),
-      colors.yellow.bold(role_title)
+      colors.green(" manager was updated to "),
+      colors.yellow.bold(manager_name)
     );
   } catch (error) {
-    console.error("Error updating employee", error);
+    console.error("Error updating employee manager", error);
   }
 }
 
-module.exports = roleUpdate;
+module.exports = managerUpdate;

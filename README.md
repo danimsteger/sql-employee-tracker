@@ -54,3 +54,6 @@ https://learnsql.com/blog/how-to-join-3-tables-or-more-in-sql/
 
 https://www.w3schools.com/sql/sql_join_self.asp
 self join
+
+coalese
+https://www.w3schools.com/sql/func_sqlserver_coalesce.asp

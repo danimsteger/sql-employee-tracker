@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const colors = require("colors");
 
 // Import query function to modify a table
-const { modifyTable, getDepts } = require("./queries");
+const { modifyTable, getDepts } = require("../queries");
 
 async function addRole(callback) {
   try {
