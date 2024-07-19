@@ -7,8 +7,10 @@ const consoleTable = require("console.table");
 const { displayTable } = require("./assets/queries");
 const addDept = require("./assets/addDept.js");
 const addRole = require("./assets/addRole");
-const { addEmployee } = require("./assets/addEmployee");
-const updateEmployee = require("./assets/updateEmployee.js");
+const addEmployee = require("./assets/addEmployee");
+const roleUpdate = require("./assets/roleUpdate.js");
+const managerUpdate = require("./assets/managerUpdate.js");
+const deleteItem = require("./assets/delete.js");
 
 // Main prompt
 function promptUser() {
@@ -22,10 +24,14 @@ function promptUser() {
           colors.magenta("View All Departments"),
           colors.red("View All Roles"),
           colors.green("View All Employees"),
+          colors.green("View All Employees by Manager"),
+          colors.magenta("View All Employees by Department"),
           colors.magenta("Add A Department"),
           colors.red("Add a Role"),
           colors.green("Add an Employee"),
           colors.red("Update an Employee's Role"),
+          colors.green("Update an Employee's Manager"),
+          colors.magenta("Delete a Department"),
         ],
       },
     ])
@@ -67,9 +73,28 @@ function promptUser() {
         addEmployee(promptUser);
       }
 
-      // Update an exisitng employee
-      else {
-        updateEmployee(promptUser);
+      // Update an exisiting employee's role
+      else if (toDo === colors.red("Update an Employee's Role")) {
+        roleUpdate(promptUser);
+      }
+
+      // Update an existing employee's manager
+      else if (toDo === colors.green("Update an Employee's Manager")) {
+        managerUpdate(promptUser);
+      }
+
+      // View all employees sorted by manager
+      else if (toDo === colors.green("View All Employees by Manager")) {
+        const query = `SELECT  CONCAT(e.first_name, ' ', e.last_name) AS "EMPLOYEE", CONCAT(m.first_name, ' ', m.last_name) AS "MANAGER" FROM employees e LEFT JOIN employees m ON e.manager_id = m.employee_id ORDER BY e.manager_id, e.first_name;`;
+        displayTable(query, promptUser);
+      }
+
+      // View all employees sorted by dept
+      else if (toDo === colors.magenta("View All Employees by Department")) {
+        const query = `SELECT CONCAT(e.first_name, ' ', e.last_name) AS "EMPLOYEE", departments.dept_name AS "DEPARTMENT" FROM employees e JOIN roles ON e.role_id = roles.role_id JOIN departments ON roles.dept_id = departments.dept_id ORDER BY departments.dept_name, e.first_name;`;
+        displayTable(query, promptUser);
+      } else if (toDo === colors.magenta("Delete a Department")) {
+        deleteItem(promptUser);
       }
     });
 }

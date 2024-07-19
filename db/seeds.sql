@@ -4,7 +4,8 @@
             ('Engineering'),
             ('Finance'),
             ('Legal'),
-            ('Sales');
+            ('Sales'),
+            ('Marketing');
 
         INSERT INTO roles (role_title, role_salary, dept_id)
         VALUES
@@ -15,7 +16,8 @@
             ('Account Manager', 160000, 2),
             ('Accountant', 125000, 2),
             ('Legal Team Lead', 250000, 3),
-            ('Lawyer', 190000, 3);
+            ('Lawyer', 190000, 3),
+            ('Social Media Manager', 250000, 5);
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
@@ -25,10 +27,13 @@ VALUES
 ('Kevin', 'Tupak', 3, 3),
 ('Kunal', 'Singh', 5, null),
 ('Malia', 'Brown', 5, 4),
+('Jack', 'Johnson', 4, 4),
 ('Sarah', 'Lourd', 7, null),
-('Tom', 'Allen', 8, 7);
+('Jessica', 'James', 9, 1),
+('Tom', 'Allen', 8, 1);
 
 
 SELECT * FROM departments;
 SELECT * FROM roles;
 SELECT * FROM employees;
+

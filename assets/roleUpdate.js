@@ -3,26 +3,9 @@ const inquirer = require("inquirer");
 const colors = require("colors");
 
 // Import functions to gather roles and modify table
-const { getRoles } = require("./addEmployee");
-const { modifyTable } = require("./queries");
+const { modifyTable, getRoles, getEmployees } = require("./queries");
 
-// Import database connection
-const pool = require("./db");
-
-// Get current list of employees
-async function getEmployees() {
-  try {
-    const result = await pool.query(
-      `SELECT * FROM employees ORDER BY employee_id`
-    );
-    const rows = result.rows;
-    return rows;
-  } catch (err) {
-    console.error("Error executing query:", err);
-  }
-}
-
-async function updateEmployee(callback) {
+async function roleUpdate(callback) {
   try {
     const employees = await getEmployees();
 
@@ -89,4 +72,4 @@ async function updateEmployee(callback) {
   }
 }
 
-module.exports = updateEmployee;
+module.exports = roleUpdate;

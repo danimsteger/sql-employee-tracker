@@ -5,7 +5,7 @@ const colors = require("colors");
 // Import query function to modify a table
 const { modifyTable, getDepts } = require("./queries");
 
-async function addRole(callback) {
+async function deleteItem(callback) {
   try {
     const departments = await getDepts();
 
@@ -22,41 +22,27 @@ async function addRole(callback) {
 
     const answer = await inquirer.prompt([
       {
-        type: "input",
-        message: "What is the name of the role?",
-        name: "role_title",
-      },
-      {
-        type: "input",
-        message: "What is the salary for this role?",
-        name: "role_salary",
-      },
-      {
         type: "list",
-        message: "What department does the role belong to?",
+        message: "Which department would you like to delete?",
         choices: departmentNames,
         name: "dept_name",
       },
     ]);
 
-    // Gathers results from prompts
-    const { role_title, role_salary, dept_name } = answer;
+    const { dept_name } = answer;
     const dept_id = departmentIDs[dept_name];
 
-    // SQL syntax to add a row to the roles table
-    const sql = `INSERT INTO roles (role_title, role_salary, dept_id) VALUES ($1, $2, $3)`;
-    const params = [role_title, role_salary, dept_id];
+    const sql = `DELETE FROM departments WHERE dept_id = $1`;
+    const params = [dept_id];
 
-    // Query with SQL syntax
     await modifyTable(sql, params, callback);
-
     console.log(
-      colors.yellow.bold(role_title),
-      colors.red(" was added to roles.")
+      colors.yellow.bold(dept_name),
+      colors.magenta(" was deleted from departmetns")
     );
   } catch (error) {
-    console.error("Error adding role", error);
+    console.error("Error deleting departmenta:", error);
   }
 }
 
-module.exports = addRole;
+module.exports = deleteItem;

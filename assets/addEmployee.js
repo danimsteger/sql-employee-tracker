@@ -3,33 +3,7 @@ const inquirer = require("inquirer");
 const colors = require("colors");
 
 // Import query function to modify a table
-const { modifyTable } = require("./queries");
-
-// Import database connection
-const pool = require("./db");
-
-// Get current list of roles
-async function getRoles() {
-  try {
-    const result = await pool.query(`SELECT * FROM roles ORDER BY role_id`);
-    const rows = result.rows;
-    return rows;
-  } catch (err) {
-    console.error("Error executing query:", err);
-  }
-}
-
-async function getEmployees() {
-  try {
-    const result = await pool.query(
-      `SELECT * FROM employees ORDER BY employee_id`
-    );
-    const rows = result.rows;
-    return rows;
-  } catch (err) {
-    console.error("Error executing query:", err);
-  }
-}
+const { modifyTable, getRoles, getEmployees } = require("./queries");
 
 async function addEmployee(callback) {
   try {
@@ -50,12 +24,6 @@ async function addEmployee(callback) {
     const employeeNames = employees.map(
       (employee) => `${employee.first_name} ${employee.last_name}`
     );
-
-    // const managers = await getManagers();
-    // console.log(managers);
-
-    // const managerNames = managers.map((manager) => manager.manager_name);
-    // console.log(managerNames);
 
     const answer = await inquirer.prompt([
       {
@@ -109,4 +77,4 @@ async function addEmployee(callback) {
   }
 }
 
-module.exports = { addEmployee, getRoles };
+module.exports = addEmployee;
