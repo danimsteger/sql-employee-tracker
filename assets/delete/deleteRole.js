@@ -19,7 +19,8 @@ async function deleteRole(callback) {
     const answer = await inquirer.prompt([
       {
         type: "list",
-        message: "Which role would you like to delete?",
+        message:
+          "Which role would you like to delete? BE CAREFUL! THIS WILL DELETE ALL EMPLOYEES IN THIS ROLE.",
         choices: roleNames,
         name: "role_title",
       },

@@ -21,16 +21,16 @@
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
-('John', 'Doe', 1, NULL),
-('Mike', 'Chan', 2, 1),
-('Ashley', 'Rodriguez', 3, null),
-('Kevin', 'Tupak', 3, 3),
-('Kunal', 'Singh', 5, null),
-('Malia', 'Brown', 5, 4),
-('Jack', 'Johnson', 4, 4),
-('Sarah', 'Lourd', 7, null),
-('Jessica', 'James', 9, 1),
-('Tom', 'Allen', 8, 1);
+('Meredith', 'Grey', 1, NULL),
+('Olivia', 'Rodrigo', 2, 1),
+('Daenerys', 'Targaryen', 3, null),
+('Sansa', 'Stark', 3, 3),
+('Jeff', 'Probst', 5, null),
+('Christina', 'Yang', 5, 4),
+('Derek', 'Shepherd', 4, 4),
+('Dua', 'Lipa', 7, null),
+('Gracie', 'Abrams', 9, 1),
+('Jon', 'Snow', 8, 1);
 
 
 SELECT * FROM departments;
